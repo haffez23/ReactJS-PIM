@@ -1,0 +1,40 @@
+{
+  "name": "ven-crud",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^2.0.3",
+    "@material/card": "^0.44.1",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "contentful": "^7.3.0",
+    "history": "^4.7.2",
+    "material-ui": "^1.0.0-beta.34",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-big-calendar": "^0.20.3",
+    "react-big-scheduler": "^0.2.6",
+    "react-csv": "^1.1.1",
+    "react-dom": "^16.8.3",
+    "react-draggable": "^3.1.1",
+    "react-material-ui": "0.0.1",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.5",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
