@@ -8,13 +8,23 @@ import thunk from 'redux-thunk';
 import reducer from './_reducers';
 
 import registerServiceWorker from './registerServiceWorker';
-
+import { MuiThemeProvider } from 'material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
 const store = createStore(reducer, applyMiddleware(thunk))
-
+const theme = createMuiTheme({
+    palette: {
+        primary: red,
+      },
+});
 
 ReactDOM.render(
+    <MuiThemeProvider theme = { theme }>
+
     <Provider store={store}>
-        <App />
+            <App />
     </Provider>
+    </MuiThemeProvider>
+
 , document.getElementById('root'));
 registerServiceWorker();

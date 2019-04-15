@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { deviceActions } from '../_actions';
+import {deviceService} from '../_services/index'
 import React, { Component } from 'react';
 import AppBar from '../_components/appbar';
 import PropTypes from 'prop-types';
@@ -86,6 +87,13 @@ class Device extends Component {
         dispatch(deviceActions.deleteDevicesDetails(id))
       };
 
+      deleteHandleClick = ( id) => {
+        console.log(id);
+        // const { dispatch } = this.props;
+        // dispatch(deviceActions.deleteDevicesDetails(id))
+        deviceService.deleteDetail("devices"+id)
+      };
+
   
     
    render() {
@@ -148,7 +156,7 @@ class Device extends Component {
                                   <TableCell >users</TableCell>
                                   <TableCell>
                             
-                                    <IconButton className={classes.button} aria-label="Delete" onClick={(event) => this.handleClick(event, n._id)}>
+                                    <IconButton className={classes.button} aria-label="Delete" onClick={(event) => this.deleteHandleClick( n._id)}>
                                       <DeleteIcon />
                                     </IconButton>
                                   </TableCell>

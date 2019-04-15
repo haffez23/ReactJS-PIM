@@ -20,10 +20,9 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100%}px)`,
   },
   'appBar-left': {
-    marginLeft: drawerWidth,
   },
   'appBar-right': {
     marginRight: drawerWidth,

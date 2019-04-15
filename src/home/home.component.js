@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { userActions, deviceActions } from '../_actions';
+import { userActions, deviceActions, messageActions } from '../_actions';
 import React, { Component } from 'react';
 import AppBar from '../_components/appbar';
 import PropTypes from 'prop-types';
@@ -71,12 +71,23 @@ const styles = theme => ({
 
 
 class Home extends Component {
+  toggleDrawer = (side, open,action,props) => () => {
+    this.setState({
+      [side]: open,
+      action : action,
+      message : props.message
+
+      
+    
+    });
+  };
 
   componentDidMount() {
     const { dispatch } = this.props;
+
     dispatch(userActions.getUser())
     dispatch(deviceActions.getDevice());
-
+    dispatch(messageActions.getMessage());
   }
 
   handleChange = event => {
@@ -91,6 +102,11 @@ class Home extends Component {
     const { dispatch } = this.props;
     dispatch(userActions.getUserById(id))
   };
+  deleteHandleClick = (event, id) => {
+    console.log(id);
+    const { dispatch } = this.props;
+    dispatch(messageActions.deleteMessageById(id))
+  };
 
   render() {
     var myEventsList = [{
@@ -104,23 +120,39 @@ class Home extends Component {
     const { classes } = this.props;
     const { user } = this.props.user;
     const { device } = this.props.device;
+    const { message } = this.props.message;
+
 
     const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <div className={classes.appFrame}>
           <AppBar />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <GridList cellHeight={180} className={classes.gridList}>
+            <GridList cellHeight={180} className={classes.gridList} style={{ position: 'center' }}>
               <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                 <ListSubheader component="div">Devices</ListSubheader>
               </GridListTile>
-              {device.map(n => {
+              {
+               
+                
+                device.filter(({users}) => {
+                  return users.some(e => e.username=='haffez')
+                }).map(n => {
+                                  console.log("Device INFO"+n._id )
+                                  n.users.map(m=>{
+                                    console.log("User Details INFO"+m.username )
+
+                                  }) 
+                                                   
+
                 return (
-                  <Device title={n.name} message={n.code} />
+                  <Device title={n.name} message={n.code} id={n._id}/>
                 )}
               )}
+
+               
             </GridList>
           </main>
         </div>
@@ -137,7 +169,8 @@ Home.propTypes = {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    device: state.device
+    device: state.device,
+    message : state.message
   };
 }
 

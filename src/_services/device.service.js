@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from '../config/config';
+import { deviceActions } from '../_actions';
 
 
 export const deviceService = {
@@ -41,7 +42,7 @@ function post(apiEndpoint, payload){
  }
 
 function put(apiEndpoint, payload){
-    return axios.put(config.baseUrl+apiEndpoint, payload, getOptions()).then((response)=>{
+    return axios.put(config.baseUrl+apiEndpoint, payload).then((response)=>{
         return response;
     }).catch((err)=>{
         console.log(err);
@@ -49,8 +50,10 @@ function put(apiEndpoint, payload){
 }
 
 function deleteDetail(apiEndpoint){
-    return axios.delete(config.baseUrl+apiEndpoint, getOptions()).then((response)=>{
-        return response;
+    return axios.delete(config.baseUrl+apiEndpoint).then((response)=>{
+        const { dispatch } = this.props;
+
+        dispatch(deviceActions.getDevice());
     }).catch((err)=>{
         console.log(err);
     })

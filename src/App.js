@@ -8,14 +8,16 @@ import { AddDevice } from './device/'
 import  { Login } from './login/';
 import { Home } from './home/';
 import { Device } from './device/';
-import { Message } from './message/';
+import { MSG } from './message/message.component';
 import { history } from './_helpers';
 import { PrivateRoute } from './_components';
 
-
 class App extends Component {
+  
   render() {
+   
     return (
+      
       <div className="App">
         <Router history={history}>
           <div>            
@@ -23,7 +25,7 @@ class App extends Component {
                 <PrivateRoute exact path='/home' component={Home} />
                 <PrivateRoute exact path='/user' component={User} />
                 <PrivateRoute exact path='/devices' component={Device} />
-                <PrivateRoute exact path='/messages' component={Message} />
+                <PrivateRoute exact path='/messages' component={MSG} />
                 <PrivateRoute exact path='/add-user' component={AddUser} />
                 <PrivateRoute exact path='/add-device' component={AddDevice} />
                 <PrivateRoute exact path='/add-message' component={AddMessage} />

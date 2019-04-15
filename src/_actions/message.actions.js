@@ -31,7 +31,7 @@ function getMessageById(id){
         let apiEndpoint = 'messages/'+ id;
         messageService.get(apiEndpoint)
         .then((response)=>{
-            dispatch(editMessagesDetails(response));
+            dispatch(editMessagesDetails(response.data.data));
         })
     };
 }
@@ -62,10 +62,7 @@ export function handleOnChangeProps(props, value){
 export function editMessagesDetails(message){
     return{
         type: "Message_DETAIL",
-        id: message._id,
-        name: message.name,
-        password: message.password,
-        username: message.username,
+        message : message
    }
 }
 

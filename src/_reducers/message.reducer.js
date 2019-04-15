@@ -19,12 +19,7 @@ export function message(state = initialState, action) {
         case 'MESSAGE_DETAIL':
             return {
                 ...state,
-                id: action._id,  
-                createdAt: action.createdAt,
-                content: action.content,
-                displayAt: action.displayAt,
-                hiddenAt: action.hiddenAt,        
-                device: action.device,        
+                message: action.message      
             };
         case "MESSAGE_UPDATED":
             return state;

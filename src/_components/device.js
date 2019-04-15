@@ -10,7 +10,12 @@ import IconButton from '@material-ui/core/IconButton';
 import {DialogTitle,DialogContentText,DialogContent,DialogActions,Dialog} from '@material-ui/core';
 import {Drawer,List,Divider} from '@material-ui/core';
 import Draggable from 'react-draggable';
-const styles = {
+import { MSG } from '../message/message.component';
+import { deviceActions } from '../_actions';
+import {deviceService} from '../_services/index'
+
+import {CalendarComponent} from '../calendar/calendar.component'
+const styles = theme =>({
     list: {
         width: 'auto',
       },
@@ -22,7 +27,26 @@ const styles = {
         height: 140,
         
     },
-};
+    button: {
+        margin: theme.spacing.unit,
+
+      },
+      leftIcon: {
+        marginRight: theme.spacing.unit,
+      },
+      rightIcon: {
+        marginLeft: theme.spacing.unit,
+      },
+      iconSmall: {
+        fontSize: 20,
+      },
+
+});
+var divStyle = {
+    background: "#eee",
+    padding: "10px",
+    marginLeft: "30px"
+  };
 function PaperComponent(props) {
     return (
       <Draggable>
@@ -69,25 +93,35 @@ function PaperComponent(props) {
             </Grid>
           </Grid>
         );
-      }else{
+      }if(action==='message'){
+
         return (
-    
-            <Grid container spacing={24}>
-            <Grid item xs={12} padding={50}>
-              <Paper className={props.classes.paper}>xs=12</Paper>
-            </Grid>
-           
-          </Grid>
+                        //id={props} Id of device selected
+
+            <MSG idDevice={props.id}/>       
         );
+      }
+      if(action==='calendar'){
+
+       
+        return (
+            //id={props} Id of device selected
+          <CalendarComponent idDevice={props.id}/>
+            );
       }
    
   }
   
 class Device extends React.Component {
-    toggleDrawer = (side, open,action) => () => {
+
+   
+
+    toggleDrawer = (side, open,action,props) => () => {
         this.setState({
-          [side]: open,
+          right: open,
           action : action,
+          message : props.message
+
           
         
         });
@@ -97,10 +131,10 @@ class Device extends React.Component {
         this.state = {
             anchor: 'left',
             right: false,
-            device :{
-                title :'',
-                code :''
-            }
+           
+
+            
+
         }
     }
     handleClickOpen = () => {
@@ -108,13 +142,25 @@ class Device extends React.Component {
       };
     
       handleClose = () => {
+
         this.setState({ open: false });
+      
       };
     
+      handleDelete = (id) => {
 
+        const { dispatch } = this.props;
+        deviceService.deleteDetail("devices/"+id)
+        this.setState({ open: false });
+    
+      };
     render() {
         const { classes } = this.props;
- 
+
+
+     
+       
+
 
         return (
 
@@ -124,7 +170,7 @@ class Device extends React.Component {
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
                             <Typography variant="h5" component="h3" xs={6} >
-                                {this.props.title}
+                                {this.props.id}
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -142,16 +188,16 @@ class Device extends React.Component {
                     <Delete />
            
                 </IconButton>  
-                <IconButton className={classes.button} aria-label="Edit" onClick={this.toggleDrawer('right', true,'edit')} >
+                <IconButton className={classes.button} aria-label="Edit" onClick={this.toggleDrawer('right', true,'edit',this.props)} >
                     <Edit />
                 </IconButton>  
-                <IconButton className={classes.button} aria-label="Info" onClick={this.toggleDrawer('right', true,'info')} >
+                <IconButton className={classes.button} aria-label="Info" onClick={this.toggleDrawer('right', true,'info',this.props)} >
                     <Info />
                 </IconButton> 
-                <IconButton className={classes.button} aria-label="Calendar" >
+                <IconButton className={classes.button} aria-label="Calendar" onClick={this.toggleDrawer('right', true,'calendar',this.props)}>
                     <CalendarToday />
                 </IconButton>  
-                <IconButton className={classes.button} aria-label="Message" >
+                <IconButton className={classes.button} aria-label="Message" onClick={this.toggleDrawer('right', true,'message',this.props)}>
                     <Message />
                 </IconButton>  
                 <IconButton className={classes.button} aria-label="Group" >
@@ -176,7 +222,7 @@ class Device extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button   onClick={(e) => this.handleDelete(this.props.id)} color="primary">
               Yes, delete it
             </Button>
           </DialogActions>
@@ -210,7 +256,9 @@ Device.propTypes = {
 const mapStateToProps = (state) => {
     const { device } = state.device;
     return {
-        device
+        device,
+        right: state.right
+        
     };
 }
 

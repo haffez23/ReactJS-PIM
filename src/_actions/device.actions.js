@@ -49,6 +49,7 @@ export function changeDevicesList(device){
     return{
         type: "FETECHED_ALL_DEVICE",
         device: device
+
     }
 }
 
