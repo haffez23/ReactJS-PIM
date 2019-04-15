@@ -35,7 +35,7 @@ import VideoDetail from "Routes/landing-pages/video-detail";
 import DocsDetails from "Routes/landing-pages/docs-details";
 
 
-import 'Assets/css/vendor/bootstrap.min.css'
+import 'assets/css/vendor/bootstrap.min.css'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
 
