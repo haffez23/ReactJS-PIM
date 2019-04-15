@@ -1,42 +1,18 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Router, Switch, Route} from 'react-router-dom';
-import { User } from './user/';
-import { AddUser } from './user/'
-import { AddMessage } from './message/'
-import { AddDevice } from './device/'
-import  { Login } from './login/';
-import { Home } from './home/';
-import { Device } from './device/';
-import { MSG } from './message/message.component';
-import { history } from './_helpers';
-import { PrivateRoute } from './_components';
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { configureStore } from "Redux/store";
 
-class App extends Component {
-  
-  render() {
-   
-    return (
-      
-      <div className="App">
-        <Router history={history}>
-          <div>            
-              <Switch>
-                <PrivateRoute exact path='/home' component={Home} />
-                <PrivateRoute exact path='/user' component={User} />
-                <PrivateRoute exact path='/devices' component={Device} />
-                <PrivateRoute exact path='/messages' component={MSG} />
-                <PrivateRoute exact path='/add-user' component={AddUser} />
-                <PrivateRoute exact path='/add-device' component={AddDevice} />
-                <PrivateRoute exact path='/add-message' component={AddMessage} />
-                <PrivateRoute exact path='/edit-user/:id' component={AddUser} />
-                <Route exact path='/' component={Login} />
-              </Switch>
-          </div>
-        </Router>
-      </div>
-    );
-  }
-}
+import App from "Containers/App";
 
-export default App;
+const MainApp = () => (
+  <Provider store={configureStore()}>
+    <Router>
+      <Switch>
+        <Route path="/" component={App} />
+      </Switch>
+    </Router>
+  </Provider>
+);
+
+export default MainApp;
